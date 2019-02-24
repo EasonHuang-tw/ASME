@@ -11,9 +11,9 @@ int datacounter =0;
 void setup() {
   Serial.begin(57600);
   delay(50);
-  error = ps2x.config_gamepad(13,11,10,12, true, true);
+  error = ps2x.config_gamepad(13,11,10,12, true, true); //setup pins and settings:  GamePad(clock, command, attention, data, Pressures?, Rumble?) check for error
   // put your setup code here, to run once:
-  while(error!=0){   //setup pins and settings:  GamePad(clock, command, attention, data, Pressures?, Rumble?) check for error
+  while(error!=0){   
    if(error == 0){
      Serial.println("Found Controller, configured successful");
    }
