@@ -11,7 +11,7 @@ int datacounter =0;
 void setup() {
   Serial.begin(57600);
   delay(50);
-  error = ps2x.config_gamepad(13,11,10,12, true, true); //setup pins and settings:  GamePad(clock, command, attention, data, Pressures?, Rumble?) check for error
+  error = ps2x.config_gamepad(9,11,10,12, false, true); //setup pins and settings:  GamePad(clock, command, attention, data, Pressures?, Rumble?) check for error
   // put your setup code here, to run once:
   while(error!=0){   
    if(error == 0){
@@ -26,7 +26,7 @@ void setup() {
   
   else if(error == 3)
     Serial.println("Controller refusing to enter Pressures mode, may not support it. ");
-  error = ps2x.config_gamepad(13,11,10,12, true, true);
+  error = ps2x.config_gamepad(9,11,10,12, false, true);
   }
 }
 void loop() {

@@ -30,7 +30,6 @@ void setup(){
     for (int i = 0; i<3;i++) digitalWrite(motor_LB[i],LOW);
     for (int i = 0; i<3;i++) digitalWrite(motor_RF[i],LOW);
     for (int i = 0; i<3;i++) digitalWrite(motor_RB[i],LOW);
-    for (int i = 0; i<3;i++) digitalWrite(motor_RB[i],LOW);
     for (int i = 0; i<3;i++) digitalWrite(motor_Reel_L[i],LOW);
     for (int i = 0; i<3;i++) digitalWrite(motor_Reel_R[i],LOW);
     
@@ -49,43 +48,50 @@ void loop() {
   int rx=  pro.Rx;
   
   if(pro.L1){
-    Serial.println("L1 is pressed");
-    Serial.print("lx:");
-    Serial.print(pro.Lx);
-    Serial.print("ly:");
-    Serial.print(pro.Ly);
-    Serial.print("rx:");
-    Serial.print(pro.Rx);
-    Serial.print("ry:");
-    Serial.println(pro.Ry);
-    if(pro.L2==0){
+    if(pro.L2==false){
         digitalWrite(motor_Reel_L[0],LOW);
-        digitalWrite(motor_Reel_L[1],HIGH);
-        analogWrite(motor_Reel_L[2],255);
+      digitalWrite(motor_Reel_L[1],HIGH);
+      analogWrite(motor_Reel_L[2],255);
     }
   }
   if(pro.L2){
-    if(pro.L1==0){
+    if(pro.L1==false){
       digitalWrite(motor_Reel_L[0],HIGH);
       digitalWrite(motor_Reel_L[1],LOW);
       analogWrite(motor_Reel_L[2],255);
+    }
   }
+  if(pro.L2==0&&pro.L1==0){
+      digitalWrite(motor_Reel_L[0],LOW);
+      digitalWrite(motor_Reel_L[1],LOW);
+      analogWrite(motor_Reel_L[2],0);
+  
   }
   if(pro.L3){
   }
   if(pro.R1){
+    
     if(pro.R2==0){
+      Serial.println("R1");
       digitalWrite(motor_Reel_R[0],HIGH);
       digitalWrite(motor_Reel_R[1],LOW);
       analogWrite(motor_Reel_R[2],255);
     }
   }
   if(pro.R2){
+    
     if(pro.R1==0){
+      Serial.println("R2");
       digitalWrite(motor_Reel_R[0],LOW);
       digitalWrite(motor_Reel_R[1],HIGH);
       analogWrite(motor_Reel_R[2],255);
     }
+  }
+  if(pro.R2==0&&pro.R1==0){
+    Serial.println("in here");
+      digitalWrite(motor_Reel_R[0],LOW);
+      digitalWrite(motor_Reel_R[1],LOW);
+      analogWrite(motor_Reel_R[2],0);
   }
   if(pro.R3){
   }
@@ -170,7 +176,7 @@ float Polar_Angle(float x,float y){
       return atan((float)y/(float)x)* 180 / PI+180;
     else 
       return atan((float)y/(float)x)* 180 / PI+360;
-};
+}
 float Polar_Length(float x,float y){
   return sqrt(x*x+y*y);
-};
+}

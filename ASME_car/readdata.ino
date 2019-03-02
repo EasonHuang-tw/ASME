@@ -131,5 +131,5 @@ void readdata(joystick *pro){
         break;
     }
   }
-  delay(50);
+  //delay(50);
 }

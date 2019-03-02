@@ -1,18 +1,17 @@
 
 #define PI 3.14159265
-
 //**************************(motor)*****************************
 
 
 const int motor_LF[3]={40, 41, 9};  //(motor left  front) IN1 IN2 ENA 
-const int motor_LB[3]={39, 38, 6};  //(motor left  back)  IN1 IN2 ENA 
-const int motor_RF[3]={47, 46, 5};  //(motor right front) IN1 IN2 ENA 
-const int motor_RB[3]={34, 35, 4};  //(motor right back)  IN1 IN2 ENA  
+const int motor_LB[3]={38, 47, 6};  //(motor left  back)  IN1 IN2 ENA 
+const int motor_RF[3]={49, 48, 13};  //(motor right front) IN1 IN2 ENA 
+const int motor_RB[3]={34, 22, 4};  //(motor right back)  IN1 IN2 ENA  
 
 //*************************(Reel)*****************************
 
 const int motor_Reel_L[3]={32,33,10};
-const int motor_Reel_R[3]={30,31,11};
+const int motor_Reel_R[3]={31,23,11};
 
 //************************(flat)***********************************
 
