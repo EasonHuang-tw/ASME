@@ -32,10 +32,8 @@ struct joystick {
    bool L1=false;
    bool L2=false;
    bool L3=false;
-   int Rx=129;
-   int Ry=129;
-   int Lx=129;
-   int Ly=129;
+   int Rx=128;
+   int Ry=128;
+   int Lx=128;
+   int Ly=128;
 };
-
-

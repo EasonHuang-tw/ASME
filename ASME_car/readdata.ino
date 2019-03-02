@@ -1,4 +1,25 @@
+void dataclear(joystick *pro){
+   pro->circle=false;
+   pro->cross=false;
+   pro->rectangle=false;
+   pro->triangle=false;
+   pro->up=false;
+   pro->down=false;
+   pro->left=false;
+   pro->right=false;
+   pro->R1=false;
+   pro->R2=false;
+   pro->R3=false;
+   pro->L1=false;
+   pro->L2=false;
+   pro->L3=false;
+   pro->Rx=128;
+   pro->Ry=128;
+   pro->Lx=128;
+   pro->Ly=128;
+  }
 void readdata(joystick *pro){
+  dataclear(pro);
   int number =0;
   int  datastate=3;            //1:L 2:R 3:lx 4:ly 5:rx 6:rx
   int datastate_last=3;

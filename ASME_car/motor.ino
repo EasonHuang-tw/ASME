@@ -6,7 +6,6 @@ void motorstop(){
   for(int i=0;i<2;i++)digitalWrite(motor_LB[i], 0);
 };
 void motorrun(int type,int power ,int yaw){
-  power=255;
   switch(type){
   case 0:                                   //right
     analogWrite(motor_LB[2],power);

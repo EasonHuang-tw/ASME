@@ -2,6 +2,7 @@
 #include"pinDefine.h"
 struct joystick pro;
 void readdata(joystick *pro);
+void dataclear(joystick *pro);
 //**********************************************************
 void motorstop();
 void motorrun(int,int,int); //type ,power ,yaw
@@ -43,58 +44,31 @@ void loop() {
      Serial.print(pro.Rx);
      Serial.print("ry:");
      Serial.println(pro.Ry);
-    left_reel_flag = true;
-    pro.L1=false;
+     
     }
     else  left_reel_flag = false;
   if(pro.L2){
-    //Serial.println("L2 is pressed");
-    pro.L2=false;
   }
   if(pro.L3){
-    Serial.println("L3 is pressed");
-    pro.L3=false;
     }
   if(pro.R1){
-    //Serial.println("R1 is pressed");
-    pro.R1=false;
   }if(pro.R2){
-    //Serial.println("R2 is pressed");
-    pro.R2=false;
     }
   if(pro.R3){
-    //Serial.println("R3 is pressed");
-    pro.R3=false;
   }if(pro.circle){
-    //Serial.println("circle is pressed");
-    pro.circle=false;
     }
   if(pro.rectangle){
-    //Serial.println("rectangle is pressed");
-    pro.rectangle=false;
   }if(pro.cross){
-    //Serial.println("cross is pressed");
-    pro.cross=false;
     }
   if(pro.triangle){
-    //Serial.println("triangle is pressed");
-    pro.triangle=false;
   }
   if(pro.up){
-    //Serial.println("up is pressed");
-    pro.up=false;
   }
   if(pro.right){
-    //Serial.println("right is pressed");
-    pro.right=false;
   }
   if(pro.down){
-    //Serial.println("down is pressed");
-    pro.down=false;
   }
   if(pro.left){
-    //Serial.println("left is pressed");
-    pro.left=false;
   }
   
   lx=(float)map(lx,0,255,-200,200);
@@ -156,6 +130,3 @@ float Polar_Angle(float x,float y){
 float Polar_Length(float x,float y){
   return sqrt(x*x+y*y);
 };
-
-
-
