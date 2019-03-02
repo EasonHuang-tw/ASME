@@ -1,5 +1,12 @@
+#include<Servo.h>
 #include <math.h> 
 #include"pinDefine.h"
+
+Servo LSV;  //Left Servo
+Servo RSV;  //Right Servo
+int LSVA;  //angle
+int RSVA;
+
 struct joystick pro;
 void readdata(joystick *pro);
 void dataclear(joystick *pro);
@@ -14,6 +21,8 @@ int last_flat_flag = 0;
 float Polar_Angle(float,float);   //y,x
 float Polar_Length(float,float);
 byte vibrate = 0;
+
+
 void setup(){
  
   Serial.begin(57600);
@@ -33,11 +42,17 @@ void setup(){
     for (int i = 0; i<3;i++) digitalWrite(motor_Reel_L[i],LOW);
     for (int i = 0; i<3;i++) digitalWrite(motor_Reel_R[i],LOW);
     
+    LSV.attach(LS);
+    RSV.attach(RS);
+    LSVA=1;
+    RSVA=179;
+    LSV.write(LSVA);
+    RSV.write(RSVA);
     motorstop();
 }
 
 void loop() {
-  
+  Serial.println("4154");
   bool motorstate=0;             //zero is spin  , one is run
   int flat_flag = 0;             //zero is stop , one is out , two is in
   readdata(&pro);
@@ -72,7 +87,6 @@ void loop() {
   if(pro.R1){
     
     if(pro.R2==0){
-      Serial.println("R1");
       digitalWrite(motor_Reel_R[0],HIGH);
       digitalWrite(motor_Reel_R[1],LOW);
       analogWrite(motor_Reel_R[2],255);
@@ -81,14 +95,12 @@ void loop() {
   if(pro.R2){
     
     if(pro.R1==0){
-      Serial.println("R2");
       digitalWrite(motor_Reel_R[0],LOW);
       digitalWrite(motor_Reel_R[1],HIGH);
       analogWrite(motor_Reel_R[2],255);
     }
   }
   if(pro.R2==0&&pro.R1==0){
-    Serial.println("in here");
       digitalWrite(motor_Reel_R[0],LOW);
       digitalWrite(motor_Reel_R[1],LOW);
       analogWrite(motor_Reel_R[2],0);
@@ -96,8 +108,16 @@ void loop() {
   if(pro.R3){
   }
   if(pro.circle){
+     if(RSVA<180){
+      RSVA+=3;
+      RSV.write(RSVA);
+      }
   }
   if(pro.rectangle){
+     if(RSVA>0){
+      RSVA-=3;
+      RSV.write(RSVA);
+    }
   }
   if(pro.cross){
   }
@@ -113,8 +133,16 @@ void loop() {
   else flat_flag=0;
   //**********************************************
   if(pro.right){
+    if(LSVA>0){
+      LSVA-=10;
+      LSV.write(LSVA);
+    }
   }
   if(pro.left){
+    if(LSVA<180){
+      LSVA+=10;
+      LSV.write(LSVA);
+    }
   }
   
   if(flat_flag!=last_flat_flag)flat_control(flat_flag);                                      //flat_control

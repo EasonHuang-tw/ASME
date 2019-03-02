@@ -15,9 +15,15 @@ const int motor_Reel_R[3]={31,23,11};
 
 //************************(flat)***********************************
 
-const int flat_0 = 20;
-const int flat_1 = 21;
-const int flat_2 = 22;
+const int flat_0 = 24;
+const int flat_1 = 25;
+const int flat_2 = 26;
+
+//**********************Servo*********************************
+
+const int LS = 12;
+const int RS = 3;
+
 
 //***************************read data******************************
 struct joystick {
