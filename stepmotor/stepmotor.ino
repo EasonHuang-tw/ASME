@@ -1,9 +1,7 @@
-const byte interruptPin = 2;
 int state = 0;
 void setup() {
   // put your setup code here, to run once:
-pinMode(interruptPin,INPUT_PULLUP);
-attachInterrupt(digitalPinToInterrupt(interruptPin), haha, RISING);
+attachInterrupt(digitalPinToInterrupt(2), haha, RISING);
 pinMode(6,INPUT);
 pinMode(7,INPUT);
 pinMode(8,OUTPUT); //DIR
@@ -15,14 +13,15 @@ Serial.begin(57600);
 void loop() {
   // put your main code here, to run repeatedly:
   Serial.println(state);
-if(state==0){delay(100);}
+if(state==0){
+  digitalWrite(9,LOW);
+}
 if(state==1){
   digitalWrite(8,HIGH);
   digitalWrite(9,HIGH);
   delayMicroseconds(70);
   digitalWrite(9,LOW);
-  delayMicroseconds(70);
-  
+  delayMicroseconds(70);  
 }
 if(state==2){
   digitalWrite(8,LOW);
