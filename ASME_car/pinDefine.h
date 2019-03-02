@@ -9,12 +9,16 @@ const int motor_LB[3]={39, 38, 6};  //(motor left  back)  IN1 IN2 ENA
 const int motor_RF[3]={47, 46, 5};  //(motor right front) IN1 IN2 ENA 
 const int motor_RB[3]={34, 35, 4};  //(motor right back)  IN1 IN2 ENA  
 
-//*************************
+//*************************(Reel)*****************************
 
-const int left_reel = 25;
-const int right_reel = 26;
-bool left_reel_flag = 0;
-bool right_reel_flag = 0;
+const int motor_Reel_L[3]={32,33,10};
+const int motor_Reel_R[3]={30,31,11};
+
+//************************(flat)***********************************
+
+const int flat_0 = 20;
+const int flat_1 = 21;
+const int flat_2 = 22;
 
 //***************************read data******************************
 struct joystick {

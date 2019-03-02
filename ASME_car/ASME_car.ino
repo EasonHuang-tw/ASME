@@ -7,7 +7,10 @@ void dataclear(joystick *pro);
 void motorstop();
 void motorrun(int,int,int); //type ,power ,yaw
 void motorspin(int);
-void reel( bool , bool , int );  // flag_up, flag_down ,pin   
+//**********************************************************
+void flat_control(int);
+int last_flat_flag = 0;
+//**********************************************************
 float Polar_Angle(float,float);   //y,x
 float Polar_Length(float,float);
 byte vibrate = 0;
@@ -21,12 +24,23 @@ void setup(){
     for (int i = 0; i<3;i++) pinMode(motor_LB[i], OUTPUT);
     for (int i = 0; i<3;i++) pinMode(motor_RF[i], OUTPUT);
     for (int i = 0; i<3;i++) pinMode(motor_RB[i], OUTPUT);
+    for (int i = 0; i<3;i++) pinMode(motor_Reel_L[i], OUTPUT);
+    for (int i = 0; i<3;i++) pinMode(motor_Reel_R[i], OUTPUT);
+    for (int i = 0; i<3;i++) digitalWrite(motor_LF[i],LOW);
+    for (int i = 0; i<3;i++) digitalWrite(motor_LB[i],LOW);
+    for (int i = 0; i<3;i++) digitalWrite(motor_RF[i],LOW);
+    for (int i = 0; i<3;i++) digitalWrite(motor_RB[i],LOW);
+    for (int i = 0; i<3;i++) digitalWrite(motor_RB[i],LOW);
+    for (int i = 0; i<3;i++) digitalWrite(motor_Reel_L[i],LOW);
+    for (int i = 0; i<3;i++) digitalWrite(motor_Reel_R[i],LOW);
+    
     motorstop();
 }
 
 void loop() {
   
-  bool motorstate=0;
+  bool motorstate=0;             //zero is spin  , one is run
+  int flat_flag = 0;             //zero is stop , one is out , two is in
   readdata(&pro);
   float left_joystick_angle=0;
   float left_joystick_length=0;
@@ -37,40 +51,70 @@ void loop() {
   if(pro.L1){
     Serial.println("L1 is pressed");
     Serial.print("lx:");
-     Serial.print(pro.Lx);
-     Serial.print("ly:");
-     Serial.print(pro.Ly);
-     Serial.print("rx:");
-     Serial.print(pro.Rx);
-     Serial.print("ry:");
-     Serial.println(pro.Ry);
-     
+    Serial.print(pro.Lx);
+    Serial.print("ly:");
+    Serial.print(pro.Ly);
+    Serial.print("rx:");
+    Serial.print(pro.Rx);
+    Serial.print("ry:");
+    Serial.println(pro.Ry);
+    if(pro.L2==0){
+        digitalWrite(motor_Reel_L[0],LOW);
+        digitalWrite(motor_Reel_L[1],HIGH);
+        analogWrite(motor_Reel_L[2],255);
     }
-    else  left_reel_flag = false;
+  }
   if(pro.L2){
+    if(pro.L1==0){
+      digitalWrite(motor_Reel_L[0],HIGH);
+      digitalWrite(motor_Reel_L[1],LOW);
+      analogWrite(motor_Reel_L[2],255);
+  }
   }
   if(pro.L3){
-    }
+  }
   if(pro.R1){
-  }if(pro.R2){
+    if(pro.R2==0){
+      digitalWrite(motor_Reel_R[0],HIGH);
+      digitalWrite(motor_Reel_R[1],LOW);
+      analogWrite(motor_Reel_R[2],255);
     }
+  }
+  if(pro.R2){
+    if(pro.R1==0){
+      digitalWrite(motor_Reel_R[0],LOW);
+      digitalWrite(motor_Reel_R[1],HIGH);
+      analogWrite(motor_Reel_R[2],255);
+    }
+  }
   if(pro.R3){
-  }if(pro.circle){
-    }
+  }
+  if(pro.circle){
+  }
   if(pro.rectangle){
-  }if(pro.cross){
-    }
+  }
+  if(pro.cross){
+  }
   if(pro.triangle){
   }
-  if(pro.up){
+  //***********************************************for flat
+  if(pro.down){                    //flat_go_out
+    flat_flag = 2;
   }
+  else if(pro.up){                //flat_come_in
+    flat_flag = 1;
+  }
+  else flat_flag=0;
+  //**********************************************
   if(pro.right){
-  }
-  if(pro.down){
   }
   if(pro.left){
   }
   
+  if(flat_flag!=last_flat_flag)flat_control(flat_flag);                                      //flat_control
+
+
+  //************************************                                             motorcontrol
   lx=(float)map(lx,0,255,-200,200);
   ly=(float)map(ly,0,255,200,-200);
   rx=(float)map(rx,0,255,-200,200);
