@@ -16,7 +16,9 @@ void motorrun(int,int,int); //type ,power ,yaw
 void motorspin(int);
 //**********************************************************
 void flat_control(int);
-int last_flat_flag = 0;
+int last_flat_flag =0;
+int flat_flag=0;
+
 //**********************************************************
 float Polar_Angle(float,float);   //y,x
 float Polar_Length(float,float);
@@ -41,7 +43,9 @@ void setup(){
     for (int i = 0; i<3;i++) digitalWrite(motor_RB[i],LOW);
     for (int i = 0; i<3;i++) digitalWrite(motor_Reel_L[i],LOW);
     for (int i = 0; i<3;i++) digitalWrite(motor_Reel_R[i],LOW);
-    
+    pinMode(flat_0,OUTPUT);
+    pinMode(flat_1,OUTPUT);
+    pinMode(flat_2,OUTPUT);
     LSV.attach(LS);
     RSV.attach(RS);
     LSVA=1;
@@ -49,12 +53,12 @@ void setup(){
     LSV.write(LSVA);
     RSV.write(RSVA);
     motorstop();
+
 }
 
 void loop() {
-  Serial.println("4154");
   bool motorstate=0;             //zero is spin  , one is run
-  int flat_flag = 0;             //zero is stop , one is out , two is in
+            //zero is stop , one is out , two is in
   readdata(&pro);
   float left_joystick_angle=0;
   float left_joystick_length=0;
@@ -108,14 +112,14 @@ void loop() {
   if(pro.R3){
   }
   if(pro.circle){
-     if(RSVA<180){
-      RSVA+=3;
+     if(RSVA>0  ){ 
+      RSVA-=3;
       RSV.write(RSVA);
       }
   }
   if(pro.rectangle){
-     if(RSVA>0){
-      RSVA-=3;
+     if(RSVA<180){
+      RSVA+=3;
       RSV.write(RSVA);
     }
   }

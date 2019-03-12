@@ -1,28 +1,27 @@
-
 #define PI 3.14159265
 //**************************(motor)*****************************
 
 
-const int motor_LF[3]={40, 41, 9};  //(motor left  front) IN1 IN2 ENA 
-const int motor_LB[3]={38, 47, 6};  //(motor left  back)  IN1 IN2 ENA 
-const int motor_RF[3]={49, 48, 13};  //(motor right front) IN1 IN2 ENA 
-const int motor_RB[3]={34, 22, 4};  //(motor right back)  IN1 IN2 ENA  
+const int motor_LF[3]={49,48,5};  //(motor left  front) IN1 IN2 ENA 
+const int motor_LB[3]={51,50,2};  //(motor left  back)  IN1 IN2 ENA 
+const int motor_RF[3]={47,46,4};  //(motor right front) IN1 IN2 ENA 
+const int motor_RB[3]={53,52,3};  //(motor right back)  IN1 IN2 ENA  
 
 //*************************(Reel)*****************************
 
-const int motor_Reel_L[3]={32,33,10};
-const int motor_Reel_R[3]={31,23,11};
+const int motor_Reel_R[3]={44,45,6};
+const int motor_Reel_L[3]={42,43,8};
 
 //************************(flat)***********************************
 
-const int flat_0 = 24;
-const int flat_1 = 25;
-const int flat_2 = 26;
+const int flat_0 = 22;
+const int flat_1 = 23;
+const int flat_2 = 24;
 
 //**********************Servo*********************************
 
 const int LS = 12;
-const int RS = 3;
+const int RS = 13;
 
 
 //***************************read data******************************
