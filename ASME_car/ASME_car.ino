@@ -87,6 +87,7 @@ void loop() {
   
   }
   if(pro.L3){
+    return;
   }
   if(pro.R1){
     
@@ -155,7 +156,6 @@ void loop() {
   //************************************                                             motorcontrol
   lx=(float)map(lx,0,255,-200,200);
   ly=(float)map(ly,0,255,200,-200);
-  rx=(float)map(rx,0,255,-200,200);
   lx==0?lx=1:1;
   ly==0?ly=1:1;
   rx==1?rx=0:1;
@@ -170,10 +170,11 @@ void loop() {
     Serial.print("Length:");
     Serial.println(left_joystick_length);*/
   }
-  if(motorstate==0)  
-    motorspin(rx);
+  if(motorstate==0){ 
+  
+     rx=(float)map(rx,0,255,-200,200);
+    motorspin(rx);}
   else{
-      rx=map(rx,-200,200,-25,25);
       if(left_joystick_angle<22.5||left_joystick_angle>=337.5){
         motorrun(0,left_joystick_length<200?left_joystick_length:200,rx); //go right
         Serial.println("go right");

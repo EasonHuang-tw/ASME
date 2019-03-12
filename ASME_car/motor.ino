@@ -6,6 +6,8 @@ void motorstop(){
   for(int i=0;i<2;i++)digitalWrite(motor_LB[i], 0);
 };
 void motorrun(int type,int power ,int yaw){
+int lw=0;
+int rw=0;
   switch(type){
   case 0:                                   //right
     analogWrite(motor_LB[2],power);
@@ -22,10 +24,15 @@ void motorrun(int type,int power ,int yaw){
     digitalWrite(motor_LB[1], 1);
     break;
   case 1:                                 //front
-    analogWrite(motor_LB[2],power);
-    analogWrite(motor_LF[2],power);
-    analogWrite(motor_RF[2],power);
-    analogWrite(motor_RB[2],power);
+    yaw=map(yaw,0,255,-20,20);
+    lw=power+yaw;
+    rw=power-yaw;
+    lw = (lw > 255) ? 255 : (lw < 0) ?0 : lw;
+    rw = (rw > 255) ? 255 : (rw < 0) ? 0 : rw;
+    analogWrite(motor_LB[2],lw);
+    analogWrite(motor_LF[2],lw);
+    analogWrite(motor_RF[2],rw);
+    analogWrite(motor_RB[2],rw);
     digitalWrite(motor_RF[0], 1);
     digitalWrite(motor_RF[1], 0);
     digitalWrite(motor_RB[0], 1);
@@ -51,6 +58,11 @@ void motorrun(int type,int power ,int yaw){
     break;
   case 3:                               //back
   Serial.println("go back");
+    yaw=map(yaw,0,255,-20,20);
+    lw=power+yaw;
+    rw=power-yaw;
+    lw = (lw > 255) ? 255 : (lw < 0) ?0 : lw;
+    rw = (rw > 255) ? 255 : (rw < 0) ? 0 : rw;
     analogWrite(motor_LB[2],power);
     analogWrite(motor_LF[2],power);
     analogWrite(motor_RF[2],power);
