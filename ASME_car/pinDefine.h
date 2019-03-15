@@ -20,9 +20,13 @@ const int flat_2 = 24;
 
 //**********************Servo*********************************
 
-const int LS = 12;
-const int RS = 13;
+const int LS = 13;
+const int RS = 12;
 
+//*********************Servo back*******************************
+
+const int LBS = 10;
+const int RBS = 11;
 
 //***************************read data******************************
 struct joystick {

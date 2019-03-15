@@ -4,8 +4,12 @@
 
 Servo LSV;  //Left Servo
 Servo RSV;  //Right Servo
+Servo LBSV;
+Servo RBSV;
 int LSVA;  //angle
 int RSVA;
+int LBSVA;
+int RBSVA;
 
 struct joystick pro;
 void readdata(joystick *pro);
@@ -15,11 +19,13 @@ void motorstop();
 void motorrun(int,int,int); //type ,power ,yaw
 void motorspin(int);
 //**********************************************************
+
 void flat_control(int);
 int last_flat_flag =0;
 int flat_flag=0;
 
 //**********************************************************
+
 float Polar_Angle(float,float);   //y,x
 float Polar_Length(float,float);
 byte vibrate = 0;
@@ -28,7 +34,7 @@ byte vibrate = 0;
 void setup(){
  
   Serial.begin(57600);
-  Serial3.begin(57600);
+  Serial2.begin(57600);
    //*********************PIN MODE*************************
       
     for (int i = 0; i<3;i++) pinMode(motor_LF[i], OUTPUT);
@@ -46,12 +52,23 @@ void setup(){
     pinMode(flat_0,OUTPUT);
     pinMode(flat_1,OUTPUT);
     pinMode(flat_2,OUTPUT);
-    LSV.attach(LS);
+    
+    LSV.attach(LS); 
     RSV.attach(RS);
-    LSVA=1;
-    RSVA=179;
+    //****************left back servo********************
+    LBSV.attach(LBS);
+    RBSV.attach(RBS);
+    
+    LSVA=5;
+    RSVA=175;
+    LBSVA=90;
+    RBSVA=90;
+  
+    
     LSV.write(LSVA);
     RSV.write(RSVA);
+    LBSV.write(LBSVA);
+    RBSV.write(RBSVA);
     motorstop();
 
 }
@@ -114,19 +131,27 @@ void loop() {
   }
   if(pro.circle){
      if(RSVA>0  ){ 
-      RSVA-=3;
+      RSVA-=15;
       RSV.write(RSVA);
       }
   }
   if(pro.rectangle){
      if(RSVA<180){
-      RSVA+=3;
+      RSVA+=15;
       RSV.write(RSVA);
     }
   }
   if(pro.cross){
+        LBSVA=90;
+        RBSVA=90;
+        LBSV.write(LBSVA);
+        RBSV.write(RBSVA);
   }
   if(pro.triangle){
+        LBSVA=170;
+        RBSVA=10;
+        LBSV.write(LBSVA);
+        RBSV.write(RBSVA);
   }
   //***********************************************for flat
   if(pro.down){                    //flat_go_out
@@ -139,13 +164,13 @@ void loop() {
   //**********************************************
   if(pro.right){
     if(LSVA>0){
-      LSVA-=10;
+      LSVA-=15;
       LSV.write(LSVA);
     }
   }
   if(pro.left){
     if(LSVA<180){
-      LSVA+=10;
+      LSVA+=15;
       LSV.write(LSVA);
     }
   }

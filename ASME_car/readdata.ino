@@ -24,8 +24,8 @@ void readdata(joystick *pro){
   int  datastate=3;            //1:L 2:R 3:lx 4:ly 5:rx 6:rx
   int datastate_last=3;
   while(1){
-    if(Serial3.available()){
-      char data= (char)Serial3.read();
+    if(Serial2.available()){
+      char data= (char)Serial2.read();
       switch  (data){
         case 'W':
           pro->up=true;
