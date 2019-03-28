@@ -104,7 +104,8 @@ void loop() {
   
   }
   if(pro.L3){
-    return;
+    LSVA=179;
+    LSV.write(LSVA);
   }
   if(pro.R1){
     
@@ -128,6 +129,8 @@ void loop() {
       analogWrite(motor_Reel_R[2],0);
   }
   if(pro.R3){
+     RSVA=0;
+     RSV.write(RSVA);
   }
   if(pro.circle){
      if(RSVA>0  ){ 
@@ -217,13 +220,17 @@ void loop() {
         
       }
       else if(left_joystick_angle>=22.5&&left_joystick_angle<67.5)
-        motorrun(4,left_joystick_length<200?left_joystick_length:200,rx); //go rightfront
+        motorstop();
+        //motorrun(4,left_joystick_length<200?left_joystick_length:200,rx); //go rightfront
       else if(left_joystick_angle>=112.5&&left_joystick_angle<157.5)
-        motorrun(5,left_joystick_length<200?left_joystick_length:200,rx); //go leftfront
+        motorstop();
+        //motorrun(5,left_joystick_length<200?left_joystick_length:200,rx); //go leftfront
       else if(left_joystick_angle>=202.5&&left_joystick_angle<247.5)
-        motorrun(6,left_joystick_length<200?left_joystick_length:200,rx); //go leftback
+        motorstop();
+        //motorrun(6,left_joystick_length<200?left_joystick_length:200,rx); //go leftback
       else if(left_joystick_angle>=292.5&&left_joystick_angle<337.5)
-        motorrun(7,left_joystick_length<200?left_joystick_length:200,rx); //go rightback
+        motorstop();
+        //motorrun(7,left_joystick_length<200?left_joystick_length:200,rx); //go rightback*/
   }
   
 }

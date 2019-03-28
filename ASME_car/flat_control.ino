@@ -10,7 +10,7 @@ void flat_control(int flag){
     else if(flag==1){   //out
       
       digitalWrite(flat_1,HIGH);
-      digitalWrite(flat_2,LOW);
+      digitalWrite(flat_2,HIGH);
       delay(50);
       digitalWrite(flat_0,HIGH);        //interrupt
       
@@ -18,7 +18,7 @@ void flat_control(int flag){
     }
     else if(flag==2){  //in
       digitalWrite(flat_1,HIGH);
-      digitalWrite(flat_2,HIGH);
+      digitalWrite(flat_2,LOW);
       delay(50);
       digitalWrite(flat_0,HIGH);        //interrupt
       Serial.println("in");
