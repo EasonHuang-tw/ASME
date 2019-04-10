@@ -1,4 +1,4 @@
-void flat_control(int flag){
+void flat_control(int flag){                      //both side flat
      if(flag==0){         //stop
       
       digitalWrite(flat_1,LOW);

@@ -23,7 +23,7 @@ void readdata(joystick *pro){
   int number =0;
   int  datastate=3;            //1:L 2:R 3:lx 4:ly 5:rx 6:rx
   int datastate_last=3;
-  while(1){
+  while(1){                   //update data
     if(Serial2.available()){
       char data= (char)Serial2.read();
       switch  (data){
@@ -69,17 +69,17 @@ void readdata(joystick *pro){
          case 'K':
           pro->R3=true;
           break;
-        case 'l':
+        case 'l':                                       // if we read l first it means we are going to have left joystick analog number than we give it a flag "8"
            datastate=8;
            break;
-        case 'r':
+        case 'r':                                       //for y the flag is "9"
           datastate=9;
            break;
         case 'x':
-          datastate==8?datastate=3:datastate=5;
+          datastate==8?datastate=3:datastate=5;       //3 is lx   5 is rx
           break;
         case 'y':
-          datastate==8?datastate=4:datastate=6;
+          datastate==8?datastate=4:datastate=6;       //4 is lx   6 is rx
           break;
         case '1':
         case '2':
@@ -99,7 +99,7 @@ void readdata(joystick *pro){
         default:
           break;
       }
-      if(datastate!=datastate_last&&datastate!=8&&datastate!=9){
+      if(datastate!=datastate_last&&datastate!=8&&datastate!=9){       //if its 8 and 9 we are still finding its x or y , so we ignore it
        //Serial.println(datastate_last);
         switch(datastate_last){
           

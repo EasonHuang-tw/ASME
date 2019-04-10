@@ -4,8 +4,9 @@
 
 Servo LSV;  //Left Servo
 Servo RSV;  //Right Servo
-Servo LBSV;
+Servo LBSV;  
 Servo RBSV;
+
 int LSVA;  //angle
 int RSVA;
 int LBSVA;
@@ -75,8 +76,7 @@ void setup(){
 
 void loop() {
   bool motorstate=0;             //zero is spin  , one is run
-            //zero is stop , one is out , two is in
-  readdata(&pro);
+  readdata(&pro);                //read joystick data
   float left_joystick_angle=0;
   float left_joystick_length=0;
   int ly = pro.Ly;
@@ -181,15 +181,15 @@ void loop() {
   if(flat_flag!=last_flat_flag)flat_control(flat_flag);                                      //flat_control
 
 
-  //************************************                                             motorcontrol
+  //************************************                                           macnum  motorcontrol
   lx=(float)map(lx,0,255,-200,200);
   ly=(float)map(ly,0,255,200,-200);
-  lx==0?lx=1:1;
+  lx==0?lx=1:1;                                                                //to make every every zero to one , because some noise around zero is one and "one" cant make a moter work.
   ly==0?ly=1:1;
   rx==1?rx=0:1;
-  if(lx==1&&ly==1)
+  if(lx==1&&ly==1)                              // dont need the car to go straight
     motorstate=0;
-  else{
+  else{                                         //need
     motorstate=1;
     left_joystick_angle=Polar_Angle(static_cast<float>(lx),static_cast<float>(ly));
     left_joystick_length=Polar_Length(static_cast<float>(lx),static_cast<float>(ly));
@@ -199,8 +199,7 @@ void loop() {
     Serial.println(left_joystick_length);*/
   }
   if(motorstate==0){ 
-  
-     rx=(float)map(rx,0,255,-200,200);
+    rx=(float)map(rx,0,255,-200,200);
     motorspin(rx);}
   else{
       if(left_joystick_angle<22.5||left_joystick_angle>=337.5){
@@ -234,14 +233,16 @@ void loop() {
   }
   
 }
-float Polar_Angle(float x,float y){
-   if(x>0&&y>0)
+
+float Polar_Angle(float x,float y){                     //get the polar angle
+   if(x>0&&y>0)                                         //first quadrant
       return atan((float)y/(float)x)* 180 / PI;
-    else if(x<0)
+    else if(x<0)                                        //second and third quadrant
       return atan((float)y/(float)x)* 180 / PI+180;
-    else 
+    else                                                //forth quadrant
       return atan((float)y/(float)x)* 180 / PI+360;
 }
+
 float Polar_Length(float x,float y){
   return sqrt(x*x+y*y);
 }
